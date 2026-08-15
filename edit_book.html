@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Book - LibSpace</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+            background: linear-gradient(
+                135deg,
+                #0f172a,
+                #1e1b4b,
+                #312e81
+            );
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-box {
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        button,
+        .back {
+            display: inline-block;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #6366f1;
+        }
+
+        .back {
+            background: #475569;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>✏️ Edit Book</h1>
+
+    <div class="form-box">
+
+        <form
+            action="{{ url_for('edit_book', book_id=book['id']) }}"
+            method="POST"
+        >
+
+            <label>Book Title</label>
+
+            <input
+                type="text"
+                name="title"
+                value="{{ book['title'] }}"
+                required
+            >
+
+            <label>Author</label>
+
+            <input
+                type="text"
+                name="author"
+                value="{{ book['author'] }}"
+                required
+            >
+
+            <label>Category</label>
+
+            <input
+                type="text"
+                name="category"
+                value="{{ book['category'] }}"
+                required
+            >
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+            >{{ book['description'] or '' }}</textarea>
+
+            <button type="submit">
+                💾 Save Changes
+            </button>
+
+            <a href="{{ url_for('admin') }}" class="back">
+                ← Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

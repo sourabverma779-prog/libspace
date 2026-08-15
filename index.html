@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LibSpace - Digital Library</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e1b4b,
+                    #312e81,
+                    #581c87
+                );
+
+            background-size: 400% 400%;
+
+            animation: backgroundMove 12s ease infinite;
+        }
+
+
+        @keyframes backgroundMove {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
+
+
+        /* NAVBAR */
+
+        nav {
+
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background:
+                rgba(0,0,0,0.25);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.1);
+
+        }
+
+
+        .logo {
+
+            font-size: 26px;
+
+            font-weight: bold;
+
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 15px;
+
+            align-items: center;
+
+        }
+
+
+        .nav-links a {
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .nav-links a:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* HERO */
+
+        .hero {
+
+            text-align: center;
+
+            padding: 80px 20px 50px;
+
+        }
+
+
+        .hero h1 {
+
+            font-size: 55px;
+
+            margin-bottom: 15px;
+
+            animation: fadeDown 1s ease;
+
+        }
+
+
+        .hero p {
+
+            font-size: 19px;
+
+            color: #cbd5e1;
+
+            animation: fadeUp 1s ease;
+
+        }
+
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(-30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* SEARCH */
+
+        .search-box {
+
+            max-width: 700px;
+
+            margin: 30px auto;
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            padding: 16px;
+
+            border: none;
+
+            outline: none;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+        }
+
+
+        .search-box button {
+
+            padding: 0 25px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #9333ea
+                );
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+        /* BOOK SECTION */
+
+        .books-section {
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 30px 20px 80px;
+
+        }
+
+
+        .books-section h2 {
+
+            text-align: center;
+
+            font-size: 32px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .books-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(260px, 1fr));
+
+            gap: 25px;
+
+        }
+
+
+        /* BOOK CARD */
+
+        .book-card {
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(15px);
+
+            transition:
+                transform 0.35s,
+                box-shadow 0.35s;
+
+            animation: cardAppear 0.8s ease;
+
+        }
+
+
+        .book-card:hover {
+
+            transform:
+                translateY(-10px)
+                scale(1.02);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.35);
+
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        .book-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .book-card h3 {
+
+            font-size: 22px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .author {
+
+            color: #c4b5fd;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .category {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(99,102,241,0.3);
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .description {
+
+            color: #cbd5e1;
+
+            line-height: 1.5;
+
+            min-height: 60px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* BUTTONS */
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .read-btn {
+
+            flex: 1;
+
+            text-align: center;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #9333ea
+                );
+
+            transition: 0.3s;
+
+        }
+
+
+        .read-btn:hover {
+
+            transform: scale(1.04);
+
+        }
+
+
+        .favorite-btn {
+
+            padding: 12px 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            cursor: pointer;
+
+        }
+
+
+        .favorite-btn:hover {
+
+            background:
+                rgba(239,68,68,0.5);
+
+        }
+
+
+        .no-books {
+
+            text-align: center;
+
+            padding: 60px;
+
+            color: #cbd5e1;
+
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .hero h1 {
+
+                font-size: 38px;
+
+            }
+
+            .search-box {
+
+                flex-direction: column;
+
+            }
+
+            .search-box button {
+
+                padding: 14px;
+
+            }
+
+            nav {
+
+                padding: 0 20px;
+
+            }
+
+            .nav-links a {
+
+                padding: 8px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        📚 LibSpace
+    </div>
+
+
+    <div class="nav-links">
+
+    <a href="/">
+        Home
+    </a>
+
+    <a href="/search">
+        🔍 Search
+    </a>
+
+    <a href="/admin_login">
+        👨‍💼 Admin
+    </a>
+
+
+        {% if session.get("user_id") %}
+
+        <a href="/dashboard">
+            👤 Dashboard
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+        {% else %}
+
+        <a href="/login">
+            Login
+        </a>
+
+        <a href="/register">
+            Register
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        📚 Welcome to LibSpace
+    </h1>
+
+    <p>
+        Your digital library — discover, read and save books.
+    </p>
+
+
+    <!-- SEARCH -->
+
+    <form
+        class="search-box"
+        action="/search"
+        method="GET"
+    >
+
+        <input
+            type="text"
+            name="q"
+            placeholder="Search books, authors..."
+        >
+
+        <button type="submit">
+            🔍 Search
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- BOOKS -->
+
+<section class="books-section">
+
+    <h2>
+        📖 Our Library
+    </h2>
+
+
+    {% if books %}
+
+    <div class="books-grid">
+
+        {% for book in books %}
+
+        <div class="book-card">
+
+
+            <div class="book-icon">
+                📕
+            </div>
+
+
+            <h3>
+                {{ book["title"] }}
+            </h3>
+
+
+            <div class="author">
+                ✍️ {{ book["author"] }}
+            </div>
+
+
+            <span class="category">
+                {{ book["category"] }}
+            </span>
+
+
+            <p class="description">
+
+                {{ book["description"] or
+                   "No description available." }}
+
+            </p>
+
+
+            <div class="actions">
+
+
+                {% if book["pdf_filename"] %}
+
+                <a
+                    href="{{ url_for('read_book', book_id=book['id']) }}"
+                    class="read-btn"
+                >
+                    📖 Read Book
+                </a>
+
+                {% else %}
+
+                <a
+                    href="{{ url_for('book_details', book_id=book['id']) }}"
+                    class="read-btn"
+                >
+                    📕 Details
+                </a>
+
+                {% endif %}
+
+
+                {% if session.get("user_id") %}
+
+                <form
+                    action="{{ url_for('add_favorite', book_id=book['id']) }}"
+                    method="POST"
+                >
+
+                    <button
+                        class="favorite-btn"
+                        type="submit"
+                        title="Add to favorites"
+                    >
+                        ❤️
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="no-books">
+
+        <h2>
+            📚 No books yet
+        </h2>
+
+        <p>
+            Add your first book from the Admin Panel.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+</section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ book["title"] }} - LibSpace</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        📚 LibSpace
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/#books">
+            Books
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="book-details">
+
+        <div class="book-details-cover">
+            📚
+        </div>
+
+
+        <div class="book-information">
+
+            <h1>
+                {{ book["title"] }}
+            </h1>
+
+            <h3>
+                Author:
+                {{ book["author"] }}
+            </h3>
+
+            <p>
+                <strong>Category:</strong>
+                {{ book["category"] }}
+            </p>
+
+            <p>
+                {{ book["description"] }}
+            </p>
+
+            <br>
+
+            <a href="{{ url_for('read_book', book_id=book['id']) }}">
+    <button>
+        📖 Read Book
+    </button>
+</a>
+
+            <a href="/">
+                <button>
+                    ← Back to Books
+                </button>
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <h3>
+        📚 LibSpace
+    </h3>
+
+    <p>
+        Your digital library for learning and knowledge.
+    </p>
+
+    <p>
+        © 2026 LibSpace
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

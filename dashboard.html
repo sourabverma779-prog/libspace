@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Library - LibSpace</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        📚 LibSpace
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/dashboard">
+            My Library
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="dashboard">
+
+    <h1>
+        👋 Welcome, {{ username }}!
+    </h1>
+
+    <p>
+        Your personal LibSpace library
+    </p>
+
+
+    <div class="dashboard-title">
+
+        <h2>
+            ❤️ My Saved Books
+        </h2>
+
+    </div>
+
+
+    {% if favorites %}
+
+    <div class="book-container">
+
+        {% for book in favorites %}
+
+        <div class="book-card">
+
+            <div class="book-cover">
+                📕
+            </div>
+
+            <h3>
+                {{ book["title"] }}
+            </h3>
+
+            <p>
+                <strong>Author:</strong>
+                {{ book["author"] }}
+            </p>
+
+            <p>
+                <strong>Category:</strong>
+                {{ book["category"] }}
+            </p>
+
+            <p>
+                {{ book["description"] }}
+            </p>
+
+
+         {% if book["pdf_filename"] %}
+
+<a
+    href="{{ url_for('read_book', book_id=book['id']) }}"
+    class="view-button"
+>
+    📖 Read Book
+</a>
+
+{% else %}
+
+<a
+    href="{{ url_for('book_details', book_id=book['id']) }}"
+    class="view-button"
+>
+    📕 View Details
+</a>
+
+{% endif %}
+
+            <form
+                action="{{ url_for('remove_favorite', book_id=book['id']) }}"
+                method="POST"
+                style="margin-top: 12px;"
+            >
+
+                <button
+                    type="submit"
+                    class="remove-button"
+                >
+                    💔 Remove
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-library">
+
+        <div class="empty-icon">
+            📚
+        </div>
+
+        <h2>
+            Your library is empty
+        </h2>
+
+        <p>
+            Explore LibSpace and save your favorite books here.
+        </p>
+
+        <a
+            href="/"
+            class="view-button"
+        >
+            🔍 Explore Books
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <h3>
+        📚 LibSpace
+    </h3>
+
+    <p>
+        Your digital library.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

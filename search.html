@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Search Books - LibSpace</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        📚 LibSpace
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        {% if session.get("user_id") %}
+
+        <a href="/dashboard">
+            ❤️ My Library
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+        {% else %}
+
+        <a href="/login">
+            Login
+        </a>
+
+        <a href="/register">
+            Register
+        </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+<section class="search-page">
+
+    <h1>
+        🔍 Find Your Next Book
+    </h1>
+
+    <p>
+        Search through the LibSpace collection.
+    </p>
+
+
+    <form
+        action="/search"
+        method="GET"
+        class="big-search"
+    >
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search title, author or keyword..."
+        >
+
+
+        <select name="category">
+
+            <option value="">
+                All Categories
+            </option>
+
+            {% for category in categories %}
+
+            <option
+                value="{{ category['category'] }}"
+                {% if selected_category == category['category'] %}
+                selected
+                {% endif %}
+            >
+                {{ category['category'] }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <button type="submit">
+            🔍 Search
+        </button>
+
+    </form>
+
+
+
+    <div class="search-results">
+
+        {% if books %}
+
+            <h2>
+                📚 {{ books|length }} Book(s) Found
+            </h2>
+
+
+            <div class="book-container">
+
+                {% for book in books %}
+
+                <div class="book-card">
+
+                    <div class="book-cover">
+                        📕
+                    </div>
+
+
+                    <h3>
+                        {{ book["title"] }}
+                    </h3>
+
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ book["author"] }}
+                    </p>
+
+
+                    <p>
+                        <strong>Category:</strong>
+                        {{ book["category"] }}
+                    </p>
+
+
+                    <p>
+                        {{ book["description"] }}
+                    </p>
+
+
+                    <a
+                        href="{{ url_for('book_details', book_id=book['id']) }}"
+                        class="view-button"
+                    >
+                        📖 View Book
+                    </a>
+
+
+                    {% if session.get("user_id") %}
+
+                    <form
+                        action="{{ url_for('add_favorite', book_id=book['id']) }}"
+                        method="POST"
+                        style="margin-top:12px;"
+                    >
+
+                        <button
+                            type="submit"
+                            class="favorite-button"
+                        >
+                            ❤️ Add to My Library
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                    <a
+                        href="/login"
+                        class="favorite-button"
+                    >
+                        ❤️ Login to Save
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="no-results">
+
+                <div class="no-results-icon">
+                    📚
+                </div>
+
+                <h2>
+                    No Books Found
+                </h2>
+
+                <p>
+                    We couldn't find a book matching your search.
+                </p>
+
+                <a
+                    href="/search"
+                    class="view-button"
+                >
+                    🔄 Show All Books
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<footer>
+
+    <h3>
+        📚 LibSpace
+    </h3>
+
+    <p>
+        Explore • Learn • Discover
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
