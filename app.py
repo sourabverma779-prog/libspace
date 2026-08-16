@@ -10,6 +10,8 @@ from flask import (
 
 import sqlite3
 import os
+# Initialize database tables
+import database
 
 from werkzeug.security import (
     generate_password_hash,
