@@ -25,7 +25,7 @@ from werkzeug.utils import secure_filename
 # LIBSPACE APP
 # ==================================================
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 
 app.secret_key = "libspace-secret-key-2026"
 
